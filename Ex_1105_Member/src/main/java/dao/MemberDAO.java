@@ -1,0 +1,258 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import dto.MemberDTO;
+import service.DBservice;
+
+public class MemberDAO {
+	// single-ton pattern: 
+	// 객체1개만생성해서 지속적으로 서비스하자
+	static MemberDAO single = null;
+
+	public static MemberDAO getInstance() {
+		//생성되지 않았으면 생성
+		if (single == null)
+			single = new MemberDAO();
+		//생성된 객체정보를 반환
+		return single;
+	}
+	
+	private MemberDAO() {
+		
+	}
+	
+	public List<MemberDTO> selectList() {
+
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM member ORDER BY idx";
+
+		try {
+			//1.Connection얻어온다
+			conn = DBservice.getInstance().getConnection();
+			//2.명령처리객체정보를 얻어오기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.결과행 처리객체 얻어오기
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MemberDTO dto = new MemberDTO();
+			
+				dto.setIdx(rs.getInt("idx"));
+				dto.setName(rs.getString("name"));
+				dto.setId(rs.getString("id"));
+				dto.setPwd(rs.getString("pwd"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddr(rs.getString("addr"));
+			
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+	
+	public int insert(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "INSERT INTO member values(seq_member_idx.nextval,?,?,?,?,?)";
+
+		try {
+			//1.Connection획득
+			conn = DBservice.getInstance().getConnection();
+			//2.명령처리객체 획득
+			pstmt = conn.prepareStatement(sql);
+
+			//3.pstmt parameter 채우기
+			pstmt.setString(1,dto.getName());
+			pstmt.setString(2,dto.getId());
+			pstmt.setString(3,dto.getPwd());
+			pstmt.setString(4,dto.getEmail());
+			pstmt.setString(5,dto.getAddr());
+			
+			//4.DB로 전송(res:처리된행수)
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+	
+	public int delete(int idx) {
+		// TODO Auto-generated method stub
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "DELETE FROM member WHERE idx=?";
+
+		try {
+			//1.Connection획득
+			conn = DBservice.getInstance().getConnection();
+			//2.명령처리객체 획득
+			pstmt = conn.prepareStatement(sql);
+
+			//3.pstmt parameter 채우기
+			pstmt.setInt(1, idx);
+			
+			//4.DB로 전송(res:처리된행수)
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+	
+	public MemberDTO selectOne(int idx) {
+
+		MemberDTO dto = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM member WHERE idx=?";
+
+		try {
+			//1.Connection얻어온다
+			conn = DBservice.getInstance().getConnection();
+			//2.명령처리객체정보를 얻어오기
+			pstmt = conn.prepareStatement(sql);
+
+			//3.pstmt parameter 설정
+			pstmt.setInt(1,idx);
+			
+			//4.결과행 처리객체 얻어오기
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new MemberDTO();
+				dto.setName(rs.getString("name"));
+				dto.setId(rs.getString("id"));
+				dto.setPwd(rs.getString("pwd"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddr(rs.getString("addr"));
+				dto.setIdx(idx);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return dto;
+	}
+	
+	public int update(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		int res = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "UPDATE member SET name=?,id=?,pwd=?,email=?,addr=? WHERE idx=?";
+
+		try {
+			//1.Connection획득
+			conn = DBservice.getInstance().getConnection();
+			//2.명령처리객체 획득
+			pstmt = conn.prepareStatement(sql);
+
+			//3.pstmt parameter 채우기
+			pstmt.setString(1,dto.getName());
+			pstmt.setString(2,dto.getId());
+			pstmt.setString(3,dto.getPwd());
+			pstmt.setString(4,dto.getEmail());
+			pstmt.setString(5,dto.getAddr());
+			pstmt.setInt(6,dto.getIdx());
+			
+			//4.DB로 전송(res:처리된행수)
+			res = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+}

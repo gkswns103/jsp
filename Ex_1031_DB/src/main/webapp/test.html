@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+	<script>
+		function send(f){
+			f.submit();
+		}
+		
+	</script>
+	</head>
+	<body>
+		<form action="test.do" method="POST">
+			<input name="id">
+			<input type="password" name="pw">
+			<input type="button" value="로그인" onclick="send(this.form)">
+		</form>
+	</body>
+</html>
