@@ -20,7 +20,7 @@
 	            
 	            //encodeURIComponent() : 특수문자가 들어가 있는 경우
 	            // 파라미터 전달에 문제가 생기지 않도록 인코딩하는 함수
-	            let param="idx="+f.idx.value+"&"+"id="+f.id.value+"&"+"pwd="+encodeURIComponent( f.pwd.value )+"&"+"name="+f.name.value+"&"+"email="+f.email.value+"&"+"addr="+f.addr.value;
+	            let param="idx="+f.idx.value+"&"+"id="+f.id.value+"&"+"pwd="+encodeURIComponent( f.pwd.value )+"&"+"name="+f.name.value+"&"+"email="+f.email.value+"&"+"addr="+f.addr.value + "&photo=" + f.photo.value;
 	            sendRequest(url,param,updFn,"POST");
 		}
          
@@ -42,7 +42,7 @@
 	</script>
 	</head>
 	<body>
-		<form>
+		<form enctype="multipart/form-data">
 			<input name="idx" type="hidden" value="${vo.idx}">
 			<table border="1" style="border-collapse: collapse;">
 				<caption>::: 회원정보 수정 :::</caption>
@@ -65,6 +65,10 @@
 				<tr>
 					<th>주소</th>
 					<td><input name='addr' value="${vo.addr}"></td>
+				</tr>
+				<tr>
+					<th>첨부</th>
+					<td><input type="file" name='photo'"></td>
 				</tr>
 				<tr>
 					<td colspan="2">

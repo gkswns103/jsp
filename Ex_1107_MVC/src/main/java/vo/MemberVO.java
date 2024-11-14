@@ -2,8 +2,14 @@ package vo;
 
 public class MemberVO {
 	private int idx;
-	private String name,id,pwd,email,addr;
+	private String name,id,pwd,email,addr,filename;
 	
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 	public int getIdx() {
 		return idx;
 	}

@@ -56,6 +56,7 @@
 				<th>비밀번호</th>
 				<th>이메일</th>
 				<th>주소</th>
+				<th>이미지</th>
 				<th colspan="2">비고</th>
 			</tr>
 			<c:forEach var="vo" items="${list}" >
@@ -66,13 +67,14 @@
 					<td>${vo.pwd}</td>
 					<td>${vo.email}</td>
 					<td>${vo.addr}</td>
+					<td><img src="upload/${vo.filename}" width="80"></td>
 					
 					<td><input type="button" value="수정" onclick="location.href='member_select_one.do?idx=${vo.idx}'"></td>
 					<td><input type="button" value="삭제" onclick="del(${vo.idx})"></td>
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan="8"><input type="button" value="회원가입" onclick="location.href='member_insert_form.jsp'"></td>
+				<td colspan="9"><input type="button" value="회원가입" onclick="location.href='member_insert_form.jsp'"></td>
 			</tr>
 		</table>
 	</body>
