@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p">
+
+<select id="select_category" resultType="vo.ProductVO" parameterType="String">
+	select * from product where category=#{category}
+</select>
+
+<insert id="insert_product" parameterType="pro">
+	insert into product values(seq_pro_idx.nextVal,#{category},#{p_num},#{p_name},#{p_company},#{p_price},#{p_saleprice},
+	#{p_image_s},#{p_image_l},#{p_content},sysdate)
+</insert>
+
+<select id="upd_one" resultType="vo.ProductVO" parameterType="int">
+	select * from product where idx=#{idx}
+</select>
+
+<update id="update_product" parameterType="pro">
+	update product set 
+	category=#{category},
+	p_num=#{p_num},
+	p_name=#{p_name},
+	p_company=#{p_company},
+	p_price=#{p_price},
+	p_saleprice=#{p_saleprice},
+	p_image_s=#{p_image_s},
+	p_image_l=#{p_image_l},
+	p_content=#{p_content},
+	p_date=sysdate
+	where idx=#{idx}
+</update>
+
+<select id="product_one" resultType="pro" parameterType="int">
+	select * from product where idx=#{idx}
+</select>
+
+<delete id="product_del" parameterType="int">
+	delete from product where idx=#{idx}
+</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
