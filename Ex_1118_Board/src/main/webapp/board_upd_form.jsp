@@ -9,6 +9,9 @@
 
 <body>
 	<form action="upd.do" method="post">
+	<input type="hidden" name="page" value="${param.page}">
+	<input type="hidden" name="search" value="${param.search}">
+	<input type="hidden" name="search_text" value="${param.search_text}">
 	<input type="hidden" name="idx" value="${vo.idx}">
 		<table>
 			<caption>게시물 수정하기</caption>

@@ -22,6 +22,10 @@ public class BoardUpdAct extends HttpServlet {
 		String name = request.getParameter("name");
 		String content = request.getParameter("content");
 		
+		String page = request.getParameter("page");
+		String search = request.getParameter("search");
+		String search_text = request.getParameter("search_text");
+		
 		String ip = request.getRemoteAddr();
 		
 		BoardVO vo = new BoardVO();
@@ -32,8 +36,8 @@ public class BoardUpdAct extends HttpServlet {
 		vo.setSubject(subject);
 		
 		int res = BoardDAO.getInstance().update(vo);
-		System.out.println(res);
-		response.sendRedirect("list.do");
+		
+		response.sendRedirect("list.do?page=" + page + "&search=" + search + "&search_text=" + search_text);
 		
 	}
 

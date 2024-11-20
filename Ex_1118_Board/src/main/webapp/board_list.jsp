@@ -14,6 +14,36 @@
 	}
 </style>
 
+<script>
+	window.onload = function() {
+		let search = document.getElementById("search");
+		let search_text = document.getElementById("search_text");
+		
+		let search_arr = ["all", "subject", "name", "content", "name_subject_content"];
+		
+		for( let i = 0; i < search_arr.length; i++) {
+			if( '${param.search}' == search_arr[i] ){
+				search[i].selected = true;
+				search_text.value = '${param.search_text}';
+				break;
+			}
+		}
+		
+	}
+
+	function search() {
+		let search = document.getElementById("search").value;
+		let search_text = document.getElementById("search_text").value;
+		
+		if( search != "all" && search_text == ""){
+			alert("입력해라");
+			return;
+		}
+		
+		location.href="list.do?search=" + search + "&search_text=" + encodeURIComponent(search_text) + "&page=1";
+	}
+</script>
+
 </head>
 <body>
 	<table width="700" align="center">
@@ -59,7 +89,7 @@
 				<!-- 댓글 기호 표기 -->
 				<c:if test="${vo.depth ne 0}">ㄴ</c:if>
 					<c:if test="${vo.del_info ne -1}">	
-						<a href="view.do?idx=${vo.idx}">${vo.subject}</a>
+						<a href="view.do?idx=${vo.idx}&page=${ empty param.page ? 1 : param.page}&search=${param.search}&search_text=${param.search_text}">${vo.subject}</a>
 					</c:if>
 					<c:if test="${vo.del_info eq -1 }">
 						<font color=gray>이미 삭제된 게시글 입니다.</font>
@@ -81,16 +111,28 @@
 		</c:forEach>
 		<tr>
 			<td colspan="9" align="center">
-				<img src="img/btn_prev.gif">
-				
-				<img src="img/btn_next.gif">
+				${pageMenu}
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="9" align="center">
+				<select id="search">
+					<option value="all">::: 전체보기 :::</option>
+					<option value="subject">제목</option>
+					<option value="name">이름</option>
+					<option value="content">내용</option>
+					<option value="name_subject_content">이름+제목+내용</option>
+				</select>
+				<input id="search_text">
+				<input type="button" value="검색" onclick="search()">
 			</td>
 		</tr>
 		
 		<tr>
 			<td colspan="9" align="right">
 				<!-- 새글 등록버튼 -->
-				<img src="img/btn_reg.gif" style="cursor:pointer;" onclick="location.href='board_write.jsp'">
+				<img src="img/btn_reg.gif" style="cursor:pointer;" onclick="location.href='board_write.jsp?page=${param.page}'">
 			</td>
 		</tr>
 	</table>

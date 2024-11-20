@@ -18,7 +18,7 @@
 		
 		<script>
 			function reply() {
-				location.href='board_reply.jsp?idx=${param.idx}';
+				location.href='board_reply.jsp?idx=${param.idx}&page=${param.page}&search=${param.search}&search_text=${param.search_text}';
 			}
 			
 			function upd() {
@@ -29,7 +29,7 @@
 					return;
 				}
 				
-				location.href="updform.do?idx=${vo.idx}";
+				location.href="updform.do?idx=${vo.idx}&page=${param.page}&search=${param.search}&search_text=${param.search_text}";
 			}
 			
 			function del() {
@@ -59,7 +59,7 @@
 					}else{
 						alert("삭제실패");
 					}
-					location.href="list.do";
+					location.href="list.do?page=${param.page}&search=${param.search}&search_text=${param.search_text}";
 				}
 			}
 		</script>
@@ -102,7 +102,7 @@
 			
 			<tr>
 				<td colspan="2" align="center">
-					<img src="img/btn_list.gif" onclick="location.href='list.do'">
+					<img src="img/btn_list.gif" onclick="location.href='list.do?page=${param.page}&search=${param.search}&search_text=${param.search_text}'">
 					
 					<c:if test="${vo.depth eq 0}">
 						<img src="img/btn_reply.gif" onclick="reply();">

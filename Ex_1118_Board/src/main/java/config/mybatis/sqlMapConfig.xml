@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<typeAliases>
 		<typeAlias type="vo.BoardVO" alias="board"/>
+		<typeAlias type="java.util.Map" alias="map"/>
 	</typeAliases>
 	
 	<environments default="">

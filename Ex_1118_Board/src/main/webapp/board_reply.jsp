@@ -30,7 +30,7 @@
 					return;
 				}
 				
-				f.action = "reply.do";
+				f.action = "reply.do?page=${param.page}&search=${param.search}&search_text=${param.search_text}";
 				f.method = "post";
 				f.submit();
 			}
@@ -72,6 +72,7 @@
 				</tr>
 				<tr>
 					<td colspan="5" align="right">
+						<img src="img/btn_reg.gif" onclick="send_check()">
 						<img src="img/btn_back.gif" onclick="history.back()">
 					</td>
 				</tr>

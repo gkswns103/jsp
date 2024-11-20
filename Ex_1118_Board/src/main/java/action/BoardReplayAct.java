@@ -1,6 +1,8 @@
 package action;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +25,10 @@ public class BoardReplayAct extends HttpServlet {
 		String content = request.getParameter("content");
 		String pwd = request.getParameter("pwd");
 		String ip = request.getRemoteAddr();
+		String page = request.getParameter("page");
+		
+		String search = request.getParameter("search");
+		String search_text = request.getParameter("search_text");
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
@@ -43,8 +49,9 @@ public class BoardReplayAct extends HttpServlet {
 		vo.setDepth( baseVO.getDepth()+1 );
 		
 		res = dao.reply(vo);
-		
-		response.sendRedirect("list.do");
+		String encode = URLEncoder.encode(search_text,"UTF8");
+		response.sendRedirect("list.do?page=" + page + "&search=" + search + "&search_text=" + encode);
 	}
 
 }
+
