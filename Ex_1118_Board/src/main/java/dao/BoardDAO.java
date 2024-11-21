@@ -41,7 +41,7 @@ public class BoardDAO {
 		SqlSession session = factory.openSession();
 		int count = session.selectOne("b.board_count",map);
 		session.close();
-		System.out.println(count);
+
 		return count;
 	}
 	

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student">
+
+	<!-- 부서목록 조회 -->
+	<select id="student_select" resultType="dto.StudentDTO"
+		parameterType="String">
+		select * from student where stunumber=#{stunumber}
+	</select>
+
+	<insert id="insert_student" parameterType="dto.StudentDTO">
+		INSERT INTO student VALUES(#{stunumber},#{stupwd},#{stuname},#{major},#{grade},#{proidx})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
